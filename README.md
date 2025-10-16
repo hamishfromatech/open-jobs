@@ -27,7 +27,7 @@ OpenJobs is a modern, open-source job board platform designed to connect profess
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/hamishfromatech/openjobs.git
+git clone https://github.com/hamishfromatech/open-jobs.git
 cd openjobs
 ```
 
@@ -42,16 +42,20 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. Initialize the database:
+4. Set up environment variables:
 ```bash
-flask db init
-flask db migrate
+cp .env.example .env
+# Edit .env and set your SECRET_KEY and other configuration
+```
+
+5. Initialize the database:
+```bash
 flask db upgrade
 ```
 
-5. Run the development server:
+6. Run the development server:
 ```bash
-flask run
+python app.py
 ```
 
 The application will be available at `http://localhost:5000`
@@ -60,17 +64,28 @@ The application will be available at `http://localhost:5000`
 
 ```
 openjobs/
-├── app.py              # Application entry point
+├── app.py              # Application entry point and factory
 ├── models.py           # Database models (User, Job)
+├── admin.py            # Admin panel routes and views
+├── jobs.py             # Job-related routes
+├── forms.py            # WTForms definitions
+├── cli.py              # CLI commands for database initialization
 ├── requirements.txt    # Project dependencies
-├── static/            # Static files
-│   ├── css/          # Stylesheets
-│   └── js/           # JavaScript files
-└── templates/         # HTML templates
-    ├── base.html     # Base template
-    ├── index.html    # Landing page
-    ├── login.html    # Login page
-    ├── register.html # Registration page
+├── .env.example        # Environment variable template
+├── .gitignore          # Git ignore rules
+├── LICENSE             # MIT License
+├── migrations/         # Database migrations
+├── static/             # Static files
+│   ├── css/           # Stylesheets
+│   └── js/            # JavaScript files
+└── templates/          # HTML templates
+    ├── admin/         # Admin panel templates
+    ├── jobs/          # Job-related templates
+    ├── errors/        # Error pages (404, 500)
+    ├── base.html      # Base template
+    ├── index.html     # Landing page
+    ├── login.html     # Login page
+    ├── register.html  # Registration page
     └── dashboard.html # User dashboard
 ```
 
@@ -95,11 +110,26 @@ OpenJobs is designed as a starter template that you can easily customize:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## Environment Variables
+
+The application requires the following environment variables:
+
+- **SECRET_KEY**: Required for session management and CSRF protection. Generate using:
+  ```bash
+  python -c "import secrets; print(secrets.token_hex(32))"
+  ```
+- **DATABASE_URL**: Database connection string (defaults to SQLite)
+
+See `.env.example` for a complete list of configuration options.
+
+## First Run Setup
+
+On first run, the application will prompt you to create an admin account at `/admin-setup`. This is required before accessing the admin dashboard.
+
 ## Support
 
-- **Documentation**: Check the `/docs` folder for detailed setup and customization guides
 - **Issues**: Report bugs or request features on the GitHub Issues page
-- **Discussions**: Join the community discussions for help and ideas
+- **Contact**: For custom implementations, contact hamish@atech.industries
 
 ## Acknowledgments
 
