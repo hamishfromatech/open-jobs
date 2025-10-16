@@ -161,5 +161,5 @@ Thumbs.db
 migrations/versions/*.py
 !migrations/versions/__init__.py
 browse.py
-flask_session
-instance
+/flask_session
+/instance
